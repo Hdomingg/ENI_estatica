@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENA ENI | Formación de Instructores</title>
+  <!-- Bootstrap 5 CSS (versión estable) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: moderna y legible -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <style>
+    /* Paleta corporativa SENA: verde institucional, blanco, gris claro, acentos */
+    :root {
+      --sena-verde: #007832;      /* Verde SENA principal */
+      --sena-verde-oscuro: #005a26;
+      --sena-verde-claro: #e6f3e6;
+      --sena-blanco: #ffffff;
+      --sena-gris: #f8f9fa;
+      --sena-gris-oscuro: #2c3e50;
+      --sena-acento: #f7c948;     /* amarillo institucional para detalles */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--sena-blanco);
+      color: var(--sena-gris-oscuro);
+      overflow-x: hidden;
+    }
+
+    /* Estilos personalizados con colores SENA */
+    .bg-sena-verde {
+      background-color: var(--sena-verde);
+    }
+    .bg-sena-verde-oscuro {
+      background-color: var(--sena-verde-oscuro);
+    }
+    .bg-sena-verde-claro {
+      background-color: var(--sena-verde-claro);
+    }
+    .text-sena-verde {
+      color: var(--sena-verde);
+    }
+    .btn-sena {
+      background-color: var(--sena-verde);
+      color: white;
+      border-radius: 40px;
+      padding: 0.6rem 2rem;
+      font-weight: 600;
+      border: 2px solid var(--sena-verde);
+      transition: all 0.3s ease;
+    }
+    .btn-sena:hover {
+      background-color: var(--sena-verde-oscuro);
+      border-color: var(--sena-verde-oscuro);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 120, 50, 0.2);
+    }
+    .btn-sena-outline {
+      background-color: transparent;
+      color: var(--sena-verde);
+      border: 2px solid var(--sena-verde);
+      border-radius: 40px;
+      padding: 0.6rem 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-sena-outline:hover {
+      background-color: var(--sena-verde);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Header */
+    .navbar {
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+      background-color: var(--sena-blanco);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+    .navbar-brand img {
+      height: 50px;
+      width: auto;
+    }
+    .nav-link {
+      font-weight: 500;
+      color: var(--sena-gris-oscuro) !important;
+      margin: 0 0.5rem;
+      position: relative;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--sena-verde) !important;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--sena-verde);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 80%;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, rgba(0, 120, 50, 0.92) 0%, rgba(0, 90, 38, 0.95) 100%), 
+                  url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      padding: 6rem 0 5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%);
+    }
+    .hero h1 {
+      font-weight: 700;
+      font-size: 3.2rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .hero .lead {
+      font-size: 1.3rem;
+      font-weight: 400;
+      max-width: 700px;
+      opacity: 0.95;
+    }
+    .hero .badge-sena {
+      background-color: var(--sena-acento);
+      color: var(--sena-verde-oscuro);
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Sección Misión */
+    .mision-section {
+      padding: 5rem 0;
+      background-color: var(--sena-blanco);
+    }
+    .mision-card {
+      background: var(--sena-blanco);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 120, 50, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+    .mision-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 50px rgba(0, 120, 50, 0.1);
+    }
+    .mision-icon {
+      width: 70px;
+      height: 70px;
+      background-color: var(--sena-verde-claro);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .mision-icon i {
+      font-size: 2.2rem;
+      color: var(--sena-verde);
+    }
+
+    /* Oportunidades / Cursos */
+    .oportunidades-section {
+      padding: 5rem 0;
+      background-color: var(--sena-gris);
+    }
+    .section-title {
+      font-weight: 700;
+      color: var(--sena-gris-oscuro);
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: var(--sena-verde);
+      border-radius: 4px;
+    }
+    .card-oportunidad {
+      border: none;
+      border-radius: 20px;
+      background: var(--sena-blanco);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(0, 120, 50, 0.08);
+    }
+    .card-oportunidad:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 120, 50, 0.12);
+      border-color: var(--sena-verde);
+    }
+    .card-oportunidad .card-body {
+      padding: 2rem;
+    }
+    .card-oportunidad .badge-nivel {
+      background-color: var(--sena-verde-claro);
+      color: var(--sena-verde-oscuro);
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .card-oportunidad h4 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+    .card-oportunidad p {
+      color: #5a6a7a;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* CTA final */
+    .cta-final {
+      background: linear-gradient(120deg, var(--sena-verde) 0%, var(--sena-verde-oscuro) 100%);
+      padding: 5rem 0;
+      color: white;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-final::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0e1e2b;
+      color: #b0c4d9;
+      padding: 3rem 0 1.5rem;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #b0c4d9;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    footer a:hover {
+      color: var(--sena-acento);
+    }
+    .footer-logo {
+      max-height: 50px;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    /* Ajustes responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.3rem;
+      }
+      .hero .lead {
+        font-size: 1.1rem;
+      }
+      .hero {
+        padding: 4rem 0 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navegación -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <!-- Logo SENA simulado con texto e ícono, ya que no se puede incrustar imagen oficial -->
+        <div class="d-flex align-items-center">
+          <i class="fas fa-graduation-cap me-2" style="color: var(--sena-verde); font-size: 2.2rem;"></i>
+          <div>
+            <span class="fw-bold" style="color: var(--sena-verde); font-size: 1.4rem; line-height: 1.1;">SENA</span><br>
+            <span style="font-size: 0.7rem; letter-spacing: 1px; color: #5a6a7a;">ENI · INSTRUCTORES</span>
+          </div>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
+          <li class="nav-item"><a class="nav-link" href="#oportunidades">Oportunidades</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+        <div class="d-flex">
+          <a href="#oportunidades" class="btn btn-sena">
+            <i class="fas fa-chalkboard-teacher me-2"></i>Capacítate
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container position-relative" style="z-index: 2;">
+      <div class="row align-items-center">
+        <div class="col-lg-9">
+          <span class="badge-sena"><i class="fas fa-star me-1"></i> Escuela Nacional de Instructores</span>
+          <h1 class="display-4 fw-bold">Formamos a los instructores que transforman vidas</h1>
+          <p class="lead mb-4">La ENI del SENA impulsa la excelencia técnica y pedagógica de quienes guían la formación profesional integral en Colombia. Únete a la red de instructores más grande del país.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#oportunidades" class="btn btn-sena btn-lg">
+              <i class="fas fa-arrow-right me-2"></i>Ver programas
+            </a>
+            <a href="#mision" class="btn btn-sena-outline btn-lg" style="border-color: white; color: white; background-color: rgba(255,255,255,0.1);">
+              Conoce la misión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Misión -->
+  <section id="mision" class="mision-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title display-6 fw-bold">Nuestra Misión</h2>
+        <p class="lead mx-auto" style="max-width: 700px; color: #4a5a6a;">La Escuela Nacional de Instructores (ENI) del SENA tiene como propósito fortalecer las competencias pedagógicas, técnicas y humanas de los instructores, para garantizar una formación profesional integral de alta calidad.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="mision-card text-center">
+            <div class="mision-icon mx-auto">
+              <i class="fas fa-users"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Formación Integral</h4>
+            <p class="text-muted">Desarrollamos habilidades pedagógicas, técnicas y socioemocionales para que cada instructor inspire y transforme.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mision-card text-center">
+            <div class="mision-icon mx-auto">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Innovación Educativa</h4>
+            <p class="text-muted">Incorporamos metodologías activas, tecnología y tendencias globales para una formación pertinente y efectiva.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mision-card text-center">
+            <div class="mision-icon mx-auto">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Compromiso Social</h4>
+            <p class="text-muted">Contribuimos al desarrollo del país formando instructores éticos, líderes y comprometidos con la equidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Oportunidades (cursos / capacitación) -->
+  <section id="oportunidades" class="oportunidades-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title display-6 fw-bold">Oportunidades de capacitación</h2>
+        <p class="lead mx-auto" style="max-width: 700px; color: #4a5a6a;">Programas diseñados para instructores SENA y aspirantes que deseen fortalecer su perfil profesional.</p>
+      </div>
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="card-oportunidad card h-100">
+            <div class="card-body d-flex flex-column">
+              <span class="badge-nivel"><i class="fas fa-certificate me-1"></i> Básico</span>
+              <h4>Pedagogía para la Formación</h4>
+              <p>Fundamentos de didáctica, evaluación y diseño de experiencias de aprendizaje en el contexto SENA.</p>
+              <a href="#" class="btn btn-sena-outline mt-auto w-100">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="card-oportunidad card h-100">
+            <div class="card-body d-flex flex-column">
+              <span class="badge-nivel"><i class="fas fa-chart-line me-1"></i> Intermedio</span>
+              <h4>Innovación Didáctica con TIC</h4>
+              <p>Integración de herramientas digitales, gamificación y aulas virtuales para potenciar la formación.</p>
+              <a href="#" class="btn btn-sena-outline mt-auto w-100">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="card-oportunidad card h-100">
+            <div class="card-body d-flex flex-column">
+              <span class="badge-nivel"><i class="fas fa-medal me-1"></i> Avanzado</span>
+              <h4>Liderazgo y Gestión de Programas</h4>
+              <p>Desarrolla competencias para coordinar proyectos formativos y equipos de instructores.</p>
+              <a href="#" class="btn btn-sena-outline mt-auto w-100">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="card-oportunidad card h-100">
+            <div class="card-body d-flex flex-column">
+              <span class="badge-nivel"><i class="fas fa-globe me-1"></i> Especialización</span>
+              <h4>Formación por Competencias</h4>
+              <p>Diseño curricular y evaluación por competencias bajo el modelo institucional del SENA.</p>
+              <a href="#" class="btn btn-sena-outline mt-auto w-100">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="#" class="btn btn-sena btn-lg px-5">
+          Ver todos los programas <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section id="contacto" class="cta-final">
+    <div class="container text-center position-relative" style="z-index: 2;">
+      <h2 class="display-5 fw-bold mb-3">¿Listo para dar el siguiente paso?</h2>
+      <p class="lead mb-4 mx-auto" style="max-width: 600px; opacity: 0.9;">Únete a la comunidad de instructores SENA y accede a formación de alto nivel con respaldo institucional.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="#" class="btn btn-light btn-lg px-5 fw-semibold" style="border-radius: 40px; color: var(--sena-verde);">
+          <i class="fas fa-user-plus me-2"></i>Registrarme
+        </a>
+        <a href="#" class="btn btn-outline-light btn-lg px-5" style="border-radius: 40px;">
+          <i class="fas fa-info-circle me-2"></i>Más información
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-graduation-cap me-2" style="color: var(--sena-acento); font-size: 2rem;"></i>
+            <div>
+              <h5 class="text-white mb-0">SENA ENI</h5>
+              <span style="font-size: 0.8rem; opacity: 0.8;">Escuela Nacional de Instructores</span>
+            </div>
+          </div>
+          <p class="small">Formamos a los instructores que construyen el futuro de Colombia con excelencia, innovación y compromiso social.</p>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h6 class="text-white mb-3">Enlaces</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#">Inicio</a></li>
+            <li class="mb-2"><a href="#mision">Misión</a></li>
+            <li class="mb-2"><a href="#oportunidades">Oportunidades</a></li>
+            <li class="mb-2"><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h6 class="text-white mb-3">Contacto</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Sede Nacional, Bogotá D.C.</li>
+            <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> (601) 123 4567</li>
+            <li class="mb-2"><i class="fas fa-envelope me-2"></i> eni@sena.edu.co</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h6 class="text-white mb-3">Síguenos</h6>
+          <div class="d-flex gap-3 fs-4">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-4 border-secondary">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small">
+        <span>© 2025 SENA - Escuela Nacional de Instructores. Todos los derechos reservados.</span>
+        <span>Política de privacidad · Términos de uso</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (para funcionalidad del navbar, etc.) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JavaScript personalizado: smooth scroll para enlaces internos -->
+  <script>
+    (function() {
+      // Smooth scroll para enlaces ancla
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === "#" || href === "") return;
+          const targetElement = document.querySelector(href);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            // Cerrar navbar si está abierto en móvil
+            const navbarCollapse = document.getElementById('navbarMain');
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+              const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+              bsCollapse.hide();
+            }
+          }
+        });
+      });
+
+      // Cambiar clase active en navbar según scroll (simple)
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 100;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href').substring(1);
+          if (href === current) {
+            link.classList.add('active');
+          } else if (current === '' && href === '') {
+            link.classList.add('active');
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
